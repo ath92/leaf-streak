@@ -2,9 +2,10 @@ import { useState } from "preact/hooks";
 
 interface PointEntryProps {
   onSubmit: (points: number) => Promise<void>;
+  onCancel?: () => void;
 }
 
-export function PointEntry({ onSubmit }: PointEntryProps) {
+export function PointEntry({ onSubmit, onCancel }: PointEntryProps) {
   const [submitting, setSubmitting] = useState(false);
 
   const handleClick = async (points: number) => {
@@ -18,7 +19,7 @@ export function PointEntry({ onSubmit }: PointEntryProps) {
 
   return (
     <div class="point-entry">
-      <h2>Log Today's Points</h2>
+      <h2>{onCancel ? "Change Today's Points" : "Log Today's Points"}</h2>
       <div class="point-buttons">
         <button
           class="point-button point-1"
@@ -42,6 +43,11 @@ export function PointEntry({ onSubmit }: PointEntryProps) {
           1/4 pt
         </button>
       </div>
+      {onCancel && (
+        <button class="cancel-button" onClick={onCancel} disabled={submitting}>
+          Cancel
+        </button>
+      )}
     </div>
   );
 }

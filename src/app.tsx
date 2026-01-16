@@ -1,10 +1,17 @@
 import "./app.css";
+import { useState } from "preact/hooks";
 import { useEntries } from "./hooks/useEntries";
 import { PointEntry } from "./components/PointEntry";
 import { Overview } from "./components/Overview";
 
 export function App() {
   const { entries, total, todayEntry, loading, error, submitEntry } = useEntries();
+  const [editing, setEditing] = useState(false);
+
+  const handleSubmit = async (points: number) => {
+    await submitEntry(points);
+    setEditing(false);
+  };
 
   if (loading) {
     return (
@@ -24,13 +31,23 @@ export function App() {
     );
   }
 
+  const showPointEntry = !todayEntry || editing;
+
   return (
     <div class="container">
       <h1>Leaf Streak</h1>
-      {todayEntry ? (
-        <Overview todayEntry={todayEntry} total={total} entries={entries} />
+      {showPointEntry ? (
+        <PointEntry
+          onSubmit={handleSubmit}
+          onCancel={todayEntry ? () => setEditing(false) : undefined}
+        />
       ) : (
-        <PointEntry onSubmit={submitEntry} />
+        <Overview
+          todayEntry={todayEntry}
+          total={total}
+          entries={entries}
+          onEdit={() => setEditing(true)}
+        />
       )}
     </div>
   );
