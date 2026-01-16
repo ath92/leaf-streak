@@ -1,5 +1,17 @@
 import { render } from 'preact'
 import './index.css'
 import { App } from './app.tsx'
+import { Home } from './components/Home.tsx'
+import { Route, Switch } from 'wouter'
 
-render(<App />, document.getElementById('app')!)
+render(
+  <Switch>
+    <Route path="/">
+      <Home />
+    </Route>
+    <Route path="/:streakId">
+      {(params) => <App streakId={params.streakId} />}
+    </Route>
+  </Switch>,
+  document.getElementById('app')!
+)

@@ -314,6 +314,70 @@ h1 {
   padding: 2rem;
 }
 
+/* Home */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro-text {
+  text-align: center;
+  color: #4b5563;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  max-width: 400px;
+}
+
+.streak-form {
+  width: 100%;
+  max-width: 400px;
+}
+
+.streak-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.streak-name-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  color: #374151;
+  font-family: inherit;
+  background: white;
+}
+
+.streak-name-input:focus {
+  outline: 2px solid #22c55e;
+  border-color: transparent;
+}
+
+.start-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.start-button:hover {
+  background: #16a34a;
+}
+
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   h1 {
@@ -371,6 +435,16 @@ h1 {
     color: #4ade80;
   }
 
+  .edit-button {
+    border-color: #4ade80;
+    color: #4ade80;
+  }
+
+  .edit-button:hover {
+    background: #4ade80;
+    color: #14532d;
+  }
+
   .streak-section {
     background: #500724;
   }
@@ -382,16 +456,6 @@ h1 {
   .streak-number,
   .streak-label {
     color: #f472b6;
-  }
-
-  .edit-button {
-    border-color: #4ade80;
-    color: #4ade80;
-  }
-
-  .edit-button:hover {
-    background: #4ade80;
-    color: #14532d;
   }
 
   .total-section {
@@ -434,5 +498,28 @@ h1 {
 
   .no-entries {
     color: #6b7280;
+  }
+
+  .intro-text {
+    color: #9ca3af;
+  }
+
+  .streak-form label {
+    color: #e5e7eb;
+  }
+
+  .streak-name-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+  }
+
+  .start-button {
+    background: #22c55e;
+  }
+
+  .start-button:hover {
+    background: #4ade80;
+    color: #14532d;
   }
 }

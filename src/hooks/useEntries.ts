@@ -62,7 +62,7 @@ function fillMissingDates(entries: Entry[]): Entry[] {
   return filledEntries;
 }
 
-export function useEntries(): UseEntriesResult {
+export function useEntries(streakId: string = "default"): UseEntriesResult {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [total, setTotal] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -74,7 +74,7 @@ export function useEntries(): UseEntriesResult {
     try {
       setLoading(true);
       setError(null);
-      const data: EntriesResponse = await fetchEntries();
+      const data: EntriesResponse = await fetchEntries(streakId);
       const filled = fillMissingDates(data.entries);
       setEntries(filled);
       setTotal(data.total);
@@ -85,7 +85,7 @@ export function useEntries(): UseEntriesResult {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [streakId]);
 
   useEffect(() => {
     loadEntries();
@@ -94,7 +94,7 @@ export function useEntries(): UseEntriesResult {
   const submitEntry = useCallback(async (points: number, date?: string) => {
     try {
       setError(null);
-      const entry = await createEntry(points, date);
+      const entry = await createEntry(points, date, streakId);
       if (!date) {
         setTodayEntry(entry);
       }
@@ -103,7 +103,7 @@ export function useEntries(): UseEntriesResult {
       setError(e instanceof Error ? e.message : "Failed to submit entry");
       throw e;
     }
-  }, [loadEntries]);
+  }, [loadEntries, streakId]);
 
   return {
     entries,
