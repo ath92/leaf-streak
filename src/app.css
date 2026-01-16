@@ -91,6 +91,11 @@ h1 {
   color: white;
 }
 
+.point-0 {
+  background: #6b7280;
+  color: white;
+}
+
 .cancel-button {
   margin-top: 1.5rem;
   padding: 0.75rem 1.5rem;

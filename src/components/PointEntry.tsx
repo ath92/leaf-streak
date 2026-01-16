@@ -79,6 +79,13 @@ export function PointEntry({
         >
           1/4 pt
         </button>
+        <button
+          class="point-button point-0"
+          onClick={() => handleClick(0)}
+          disabled={submitting}
+        >
+          0 pt
+        </button>
       </div>
       {onCancel && (
         <button class="cancel-button" onClick={onCancel} disabled={submitting}>

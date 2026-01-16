@@ -14,6 +14,7 @@ function formatPoints(points: number): string {
   if (points === 1) return "1 pt";
   if (points === 0.5) return "1/2 pt";
   if (points === 0.25) return "1/4 pt";
+  if (points === 0) return "0 pt";
   return `${points} pt`;
 }
 

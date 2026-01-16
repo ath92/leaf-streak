@@ -119,8 +119,8 @@ async function createEntry(request: Request, env: Env, corsHeaders: Record<strin
     });
   }
 
-  if (![1, 0.5, 0.25].includes(points)) {
-    return new Response(JSON.stringify({ error: "Points must be 1, 0.5, or 0.25" }), {
+  if (![1, 0.5, 0.25, 0].includes(points)) {
+    return new Response(JSON.stringify({ error: "Points must be 1, 0.5, 0.25, or 0" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
