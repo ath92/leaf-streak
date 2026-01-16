@@ -13,6 +13,7 @@ export default defineConfig({
         name: 'Leaf Streak',
         short_name: 'Leaf Streak',
         description: 'Track your daily leaf streak points',
+        start_url: undefined,
         theme_color: '#22c55e',
         background_color: '#ffffff',
         display: 'standalone',
