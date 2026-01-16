@@ -5,21 +5,21 @@ export function getToday(): string {
   return now.toISOString().split("T")[0];
 }
 
-export async function fetchEntries(): Promise<EntriesResponse> {
+export async function fetchEntries(streakId: string = "default"): Promise<EntriesResponse> {
   const today = getToday();
-  const response = await fetch(`/api/entries?today=${today}`);
+  const response = await fetch(`/api/entries?today=${today}&streakId=${streakId}`);
   if (!response.ok) {
     throw new Error("Failed to fetch entries");
   }
   return response.json();
 }
 
-export async function createEntry(points: number, date?: string): Promise<Entry> {
+export async function createEntry(points: number, date?: string, streakId: string = "default"): Promise<Entry> {
   const entryDate = date ?? getToday();
   const response = await fetch("/api/entries", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ date: entryDate, points }),
+    body: JSON.stringify({ date: entryDate, points, streakId }),
   });
   if (!response.ok) {
     throw new Error("Failed to create entry");

@@ -6,9 +6,13 @@ import { Overview } from "./components/Overview";
 import type { Entry } from "./types";
 import { getToday } from "./api";
 
-export function App() {
+interface AppProps {
+  streakId?: string;
+}
+
+export function App({ streakId = "default" }: AppProps) {
   const { entries, total, streak, todayEntry, loading, error, submitEntry } =
-    useEntries();
+    useEntries(streakId);
   const [editingDate, setEditingDate] = useState<string | null>(null);
 
   const handleSubmit = async (points: number) => {
@@ -24,10 +28,12 @@ export function App() {
     setEditingDate(getToday());
   };
 
+  const displayName = streakId === "default" ? "Leaf Streak" : `${streakId.charAt(0).toUpperCase() + streakId.slice(1)} Streak`;
+
   if (loading) {
     return (
       <div class="container">
-        <h1>Leaf Streak</h1>
+        <h1>{displayName}</h1>
         <p class="loading">Loading...</p>
       </div>
     );
@@ -36,7 +42,7 @@ export function App() {
   if (error) {
     return (
       <div class="container">
-        <h1>Leaf Streak</h1>
+        <h1>{displayName}</h1>
         <p class="error">{error}</p>
       </div>
     );
@@ -46,7 +52,7 @@ export function App() {
 
   return (
     <div class="container">
-      <h1>Leaf Streak</h1>
+      <h1>{displayName}</h1>
       {showPointEntry ? (
         <PointEntry
           onSubmit={handleSubmit}

@@ -87,10 +87,13 @@ async function handleApi(request: Request, env: Env, url: URL): Promise<Response
 
 async function getEntries(env: Env, url: URL, corsHeaders: Record<string, string>): Promise<Response> {
   const today = url.searchParams.get("today");
+  const streakId = url.searchParams.get("streakId") || "default";
 
   const { results: entries } = await env.DB.prepare(
-    "SELECT * FROM entries ORDER BY date DESC"
-  ).all<Entry>();
+    "SELECT * FROM entries WHERE streak_id = ? ORDER BY date DESC"
+  )
+    .bind(streakId)
+    .all<Entry>();
 
   const total = entries.reduce((sum, entry) => sum + entry.points, 0);
 
@@ -109,8 +112,9 @@ async function getEntries(env: Env, url: URL, corsHeaders: Record<string, string
 }
 
 async function createEntry(request: Request, env: Env, corsHeaders: Record<string, string>): Promise<Response> {
-  const body = await request.json() as { date: string; points: number };
+  const body = await request.json() as { date: string; points: number; streakId?: string };
   const { date, points } = body;
+  const streakId = body.streakId || "default";
 
   if (!date || typeof points !== "number") {
     return new Response(JSON.stringify({ error: "Invalid request body" }), {
@@ -127,13 +131,13 @@ async function createEntry(request: Request, env: Env, corsHeaders: Record<strin
   }
 
   await env.DB.prepare(
-    "INSERT INTO entries (date, points) VALUES (?, ?) ON CONFLICT(date) DO UPDATE SET points = ?"
+    "INSERT INTO entries (streak_id, date, points) VALUES (?, ?, ?) ON CONFLICT(streak_id, date) DO UPDATE SET points = ?"
   )
-    .bind(date, points, points)
+    .bind(streakId, date, points, points)
     .run();
 
-  const entry = await env.DB.prepare("SELECT * FROM entries WHERE date = ?")
-    .bind(date)
+  const entry = await env.DB.prepare("SELECT * FROM entries WHERE streak_id = ? AND date = ?")
+    .bind(streakId, date)
     .first<Entry>();
 
   return new Response(JSON.stringify({ entry }), {
