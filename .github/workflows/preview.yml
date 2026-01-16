@@ -33,13 +33,28 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Create preview database
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 create leaf-streak-preview-${{ github.event.pull_request.number }}
+        continue-on-error: true
+
+      - name: Run migrations
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 migrations apply leaf-streak-preview-${{ github.event.pull_request.number }} --remote
+
       - name: Deploy Preview
         id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --name leaf-streak-preview-${{ github.event.pull_request.number }}
+          command: deploy --name leaf-streak-preview-${{ github.event.pull_request.number }} --d1 DB=leaf-streak-preview-${{ github.event.pull_request.number }}
 
       - name: Find existing comment
         uses: peter-evans/find-comment@v3
@@ -77,3 +92,10 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: delete --name leaf-streak-preview-${{ github.event.pull_request.number }} --force
+
+      - name: Delete Preview Database
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 delete leaf-streak-preview-${{ github.event.pull_request.number }} -y
