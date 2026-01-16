@@ -198,6 +198,7 @@ h1 {
 
 .add-entry-button:hover {
   background: #dcfce7;
+  border-color: #166534;
   transform: translateY(-1px);
 }
 
@@ -304,6 +305,7 @@ h1 {
 
   .add-entry-button:hover {
     background: #166534;
+    border-color: #86efac;
   }
 
   .cancel-button {
