@@ -40,7 +40,11 @@ export function PointEntry({
         return (
           <>
             Edit{" "}
-            <input type="date" value={editingDate} onChange={setEditingDate} />
+            <input
+              type="date"
+              value={editingDate}
+              onChange={(e) => setEditingDate(e.currentTarget.value)}
+            />
           </>
         );
       }
