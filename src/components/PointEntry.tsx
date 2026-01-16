@@ -20,6 +20,7 @@ export function PointEntry({
   onSubmit,
   onCancel,
   editingDate,
+  setEditingDate,
 }: PointEntryProps) {
   const [submitting, setSubmitting] = useState(false);
 
