@@ -33,13 +33,22 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Run migrations
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.59.2"
+          command: d1 migrations apply leaf-streak-preview --remote --env preview
+
       - name: Deploy Preview
         id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --name leaf-streak-preview-${{ github.event.pull_request.number }}
+          wranglerVersion: "4.59.2"
+          command: deploy --env preview
 
       - name: Find existing comment
         uses: peter-evans/find-comment@v3
@@ -55,11 +64,11 @@ jobs:
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## 🚀 Preview deployment
+            ## Preview deployment
 
             Your preview is ready!
 
-            **Preview URL:** https://leaf-streak-preview-${{ github.event.pull_request.number }}.workers.dev
+            **Preview URL:** ${{ steps.deploy.outputs.deployment-url }}
 
             _Last deployed: ${{ github.event.pull_request.head.sha }}_
           edit-mode: replace
@@ -68,12 +77,11 @@ jobs:
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Delete Preview Worker
-        uses: cloudflare/wrangler-action@v3
+      - name: Comment on PR
+        uses: peter-evans/create-or-update-comment@v4
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: delete --name leaf-streak-preview-${{ github.event.pull_request.number }} --force
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## Preview deployment
+
+            Preview deployment cleaned up.

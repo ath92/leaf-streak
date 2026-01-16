@@ -4,3 +4,16 @@ compatibility_date = "2024-01-01"
 
 [site]
 bucket = "./dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "leaf-streak-db"
+database_id = "e48fe3b9-38ce-482c-a7b8-1c2e889ef226"
+migrations_dir = "migrations"
+
+[env.preview]
+[[env.preview.d1_databases]]
+binding = "DB"
+database_name = "leaf-streak-preview"
+database_id = "2adee486-8653-430d-a279-98ba468aece2"
+migrations_dir = "migrations"

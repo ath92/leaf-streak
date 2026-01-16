@@ -1,25 +1,170 @@
-#app {
-  max-width: 1280px;
+.container {
+  max-width: 400px;
   margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2d5a27;
+}
+
+.loading,
+.error {
+  text-align: center;
   padding: 2rem;
+}
+
+.error {
+  color: #dc2626;
+}
+
+/* Point Entry */
+.point-entry {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.preact:hover {
-  filter: drop-shadow(0 0 2em #673ab8aa);
+.point-entry h2 {
+  margin-bottom: 1.5rem;
+  color: #374151;
 }
 
-.card {
-  padding: 2em;
+.point-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
-.read-the-docs {
-  color: #888;
+.point-button {
+  padding: 1.5rem 2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.point-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.point-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.point-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.point-1 {
+  background: #22c55e;
+  color: white;
+}
+
+.point-half {
+  background: #84cc16;
+  color: white;
+}
+
+.point-quarter {
+  background: #eab308;
+  color: white;
+}
+
+/* Overview */
+.overview {
+  text-align: center;
+}
+
+.today-status {
+  background: #f0fdf4;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.today-status h2 {
+  margin: 0 0 0.5rem;
+  color: #166534;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.today-points {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #22c55e;
+  margin: 0;
+}
+
+.total-section {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.total-section h3 {
+  margin: 0 0 0.5rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.total-points {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #374151;
+  margin: 0;
+}
+
+/* Entry List */
+.entry-list {
+  text-align: left;
+}
+
+.entry-list h3 {
+  color: #6b7280;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.entry-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.entry-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.entry-item:last-child {
+  border-bottom: none;
+}
+
+.entry-date {
+  color: #6b7280;
+}
+
+.entry-points {
+  font-weight: 600;
+  color: #374151;
+}
+
+.no-entries {
+  text-align: center;
+  color: #9ca3af;
+  padding: 2rem;
 }
