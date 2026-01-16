@@ -38,6 +38,7 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --name leaf-streak-preview-${{ github.event.pull_request.number }}
 
       - name: Find existing comment
@@ -74,4 +75,5 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: delete --name leaf-streak-preview-${{ github.event.pull_request.number }} --force
