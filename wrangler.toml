@@ -8,5 +8,5 @@ bucket = "./dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "leaf-streak-db"
-database_id = "YOUR_DATABASE_ID"
+database_id = "e48fe3b9-38ce-482c-a7b8-1c2e889ef226"
 migrations_dir = "migrations"

@@ -34,12 +34,22 @@ jobs:
         run: pnpm run build
 
       - name: Create preview database
+        id: create-db
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: d1 create leaf-streak-preview-${{ github.event.pull_request.number }}
         continue-on-error: true
+
+      - name: Get database ID
+        id: get-db-id
+        run: |
+          DB_ID=$(npx wrangler d1 list --json | jq -r '.[] | select(.name == "leaf-streak-preview-${{ github.event.pull_request.number }}") | .uuid')
+          echo "db_id=$DB_ID" >> $GITHUB_OUTPUT
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Run migrations
         uses: cloudflare/wrangler-action@v3
@@ -54,7 +64,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --name leaf-streak-preview-${{ github.event.pull_request.number }} --d1 DB=leaf-streak-preview-${{ github.event.pull_request.number }}
+          command: deploy --name leaf-streak-preview-${{ github.event.pull_request.number }} --d1 DB=${{ steps.get-db-id.outputs.db_id }}
 
       - name: Find existing comment
         uses: peter-evans/find-comment@v3
