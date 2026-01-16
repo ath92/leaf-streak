@@ -30,6 +30,22 @@ h1 {
   color: #374151;
 }
 
+.date-input {
+  padding: 0.25rem 0.5rem;
+  font-size: 1.25rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #374151;
+  font-family: inherit;
+  background: white;
+  cursor: pointer;
+}
+
+.date-input:focus {
+  outline: 2px solid #22c55e;
+  border-color: transparent;
+}
+
 .point-buttons {
   display: flex;
   gap: 1rem;
@@ -163,6 +179,33 @@ h1 {
   margin: 0;
 }
 
+.add-entry-section {
+  margin-bottom: 1.5rem;
+}
+
+.add-entry-button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.1s, transform 0.1s;
+}
+
+.add-entry-button:hover {
+  background: #dcfce7;
+  border-color: #166534;
+  transform: translateY(-1px);
+}
+
+.add-entry-button:active {
+  transform: translateY(0);
+}
+
 /* Entry List */
 .entry-list {
   text-align: left;
@@ -197,9 +240,31 @@ h1 {
   color: #6b7280;
 }
 
+.entry-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .entry-points {
   font-weight: 600;
   color: #374151;
+}
+
+.entry-edit-button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.entry-edit-button:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
 }
 
 .no-entries {
@@ -220,6 +285,27 @@ h1 {
 
   .point-entry h2 {
     color: #e5e7eb;
+  }
+
+  .date-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+  }
+
+  .date-input:focus {
+    outline-color: #4ade80;
+  }
+
+  .add-entry-button {
+    background: #14532d;
+    color: #86efac;
+    border-color: #166534;
+  }
+
+  .add-entry-button:hover {
+    background: #166534;
+    border-color: #86efac;
   }
 
   .cancel-button {
@@ -280,6 +366,16 @@ h1 {
 
   .entry-points {
     color: #e5e7eb;
+  }
+
+  .entry-edit-button {
+    border-color: #4b5563;
+    color: #9ca3af;
+  }
+
+  .entry-edit-button:hover {
+    background: #374151;
+    border-color: #6b7280;
   }
 
   .no-entries {

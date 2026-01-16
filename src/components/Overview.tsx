@@ -6,6 +6,8 @@ interface OverviewProps {
   total: number;
   entries: Entry[];
   onEdit: () => void;
+  onEditEntry: (entry: Entry) => void;
+  onAddEntry: () => void;
 }
 
 function formatPoints(points: number): string {
@@ -15,7 +17,14 @@ function formatPoints(points: number): string {
   return `${points} pt`;
 }
 
-export function Overview({ todayEntry, total, entries, onEdit }: OverviewProps) {
+export function Overview({
+  todayEntry,
+  total,
+  entries,
+  onEdit,
+  onEditEntry,
+  onAddEntry,
+}: OverviewProps) {
   return (
     <div class="overview">
       <div class="today-status">
@@ -31,7 +40,13 @@ export function Overview({ todayEntry, total, entries, onEdit }: OverviewProps) 
         <p class="total-points">{total}</p>
       </div>
 
-      <EntryList entries={entries} />
+      <div class="add-entry-section">
+        <button class="add-entry-button" onClick={onAddEntry}>
+          Add Entry
+        </button>
+      </div>
+
+      <EntryList entries={entries} onEditEntry={onEditEntry} />
     </div>
   );
 }
