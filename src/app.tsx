@@ -4,6 +4,7 @@ import { useEntries } from "./hooks/useEntries";
 import { PointEntry } from "./components/PointEntry";
 import { Overview } from "./components/Overview";
 import type { Entry } from "./types";
+import { getToday } from "./api";
 
 export function App() {
   const { entries, total, todayEntry, loading, error, submitEntry } =
@@ -17,6 +18,10 @@ export function App() {
 
   const handleEditEntry = (entry: Entry) => {
     setEditingDate(entry.date);
+  };
+
+  const handleAddEntry = () => {
+    setEditingDate(getToday());
   };
 
   if (loading) {
@@ -56,6 +61,7 @@ export function App() {
           entries={entries}
           onEdit={() => setEditingDate(todayEntry.date)}
           onEditEntry={handleEditEntry}
+          onAddEntry={handleAddEntry}
         />
       )}
     </div>

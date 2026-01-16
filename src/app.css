@@ -179,6 +179,32 @@ h1 {
   margin: 0;
 }
 
+.add-entry-section {
+  margin-bottom: 1.5rem;
+}
+
+.add-entry-button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.1s, transform 0.1s;
+}
+
+.add-entry-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.add-entry-button:active {
+  transform: translateY(0);
+}
+
 /* Entry List */
 .entry-list {
   text-align: left;
