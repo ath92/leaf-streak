@@ -33,19 +33,18 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Create preview database
-        id: create-db
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: d1 create leaf-streak-preview-${{ github.event.pull_request.number }}
-        continue-on-error: true
-
-      - name: Get database ID
+      - name: Create or get preview database
         id: get-db-id
         run: |
-          DB_ID=$(npx wrangler d1 list --json | jq -r '.[] | select(.name == "leaf-streak-preview-${{ github.event.pull_request.number }}") | .uuid')
+          DB_NAME="leaf-streak-preview-${{ github.event.pull_request.number }}"
+          DB_ID=$(npx wrangler d1 list --json | jq -r ".[] | select(.name == \"$DB_NAME\") | .uuid")
+          if [ -z "$DB_ID" ]; then
+            echo "Creating database $DB_NAME..."
+            npx wrangler d1 create "$DB_NAME"
+            DB_ID=$(npx wrangler d1 list --json | jq -r ".[] | select(.name == \"$DB_NAME\") | .uuid")
+          else
+            echo "Database $DB_NAME already exists with ID $DB_ID"
+          fi
           echo "db_id=$DB_ID" >> $GITHUB_OUTPUT
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
