@@ -4,6 +4,7 @@ import { EntryList } from "./EntryList";
 interface OverviewProps {
   todayEntry: Entry;
   total: number;
+  streak: number;
   entries: Entry[];
   onEdit: () => void;
   onEditEntry: (entry: Entry) => void;
@@ -21,6 +22,7 @@ function formatPoints(points: number): string {
 export function Overview({
   todayEntry,
   total,
+  streak,
   entries,
   onEdit,
   onEditEntry,
@@ -34,6 +36,14 @@ export function Overview({
         <button class="edit-button" onClick={onEdit}>
           Change
         </button>
+      </div>
+
+      <div class="streak-section">
+        <h3>Current Streak</h3>
+        <p class="streak-value">
+          <span class="streak-number">{streak}</span>
+          <span class="streak-label">days</span>
+        </p>
       </div>
 
       <div class="total-section">

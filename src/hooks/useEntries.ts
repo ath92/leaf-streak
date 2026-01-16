@@ -5,10 +5,23 @@ import { fetchEntries, createEntry, getToday } from "../api";
 interface UseEntriesResult {
   entries: Entry[];
   total: number;
+  streak: number;
   todayEntry: Entry | null;
   loading: boolean;
   error: string | null;
   submitEntry: (points: number, date?: string) => Promise<void>;
+}
+
+function calculateStreak(entries: Entry[]): number {
+  let streak = 0;
+  for (const entry of entries) {
+    if (entry.points === 1) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+  return streak;
 }
 
 function fillMissingDates(entries: Entry[]): Entry[] {
@@ -52,6 +65,7 @@ function fillMissingDates(entries: Entry[]): Entry[] {
 export function useEntries(): UseEntriesResult {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [total, setTotal] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [todayEntry, setTodayEntry] = useState<Entry | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,8 +75,10 @@ export function useEntries(): UseEntriesResult {
       setLoading(true);
       setError(null);
       const data: EntriesResponse = await fetchEntries();
-      setEntries(fillMissingDates(data.entries));
+      const filled = fillMissingDates(data.entries);
+      setEntries(filled);
       setTotal(data.total);
+      setStreak(calculateStreak(filled));
       setTodayEntry(data.todayEntry);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load entries");
@@ -92,6 +108,7 @@ export function useEntries(): UseEntriesResult {
   return {
     entries,
     total,
+    streak,
     todayEntry,
     loading,
     error,

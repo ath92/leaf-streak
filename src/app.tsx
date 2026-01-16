@@ -7,7 +7,7 @@ import type { Entry } from "./types";
 import { getToday } from "./api";
 
 export function App() {
-  const { entries, total, todayEntry, loading, error, submitEntry } =
+  const { entries, total, streak, todayEntry, loading, error, submitEntry } =
     useEntries();
   const [editingDate, setEditingDate] = useState<string | null>(null);
 
@@ -58,6 +58,7 @@ export function App() {
         <Overview
           todayEntry={todayEntry}
           total={total}
+          streak={streak}
           entries={entries}
           onEdit={() => setEditingDate(todayEntry.date)}
           onEditEntry={handleEditEntry}
