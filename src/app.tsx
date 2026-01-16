@@ -3,14 +3,19 @@ import { useState } from "preact/hooks";
 import { useEntries } from "./hooks/useEntries";
 import { PointEntry } from "./components/PointEntry";
 import { Overview } from "./components/Overview";
+import type { Entry } from "./types";
 
 export function App() {
   const { entries, total, todayEntry, loading, error, submitEntry } = useEntries();
-  const [editing, setEditing] = useState(false);
+  const [editingDate, setEditingDate] = useState<string | null>(null);
 
   const handleSubmit = async (points: number) => {
-    await submitEntry(points);
-    setEditing(false);
+    await submitEntry(points, editingDate ?? undefined);
+    setEditingDate(null);
+  };
+
+  const handleEditEntry = (entry: Entry) => {
+    setEditingDate(entry.date);
   };
 
   if (loading) {
@@ -31,7 +36,7 @@ export function App() {
     );
   }
 
-  const showPointEntry = !todayEntry || editing;
+  const showPointEntry = !todayEntry || editingDate !== null;
 
   return (
     <div class="container">
@@ -39,14 +44,16 @@ export function App() {
       {showPointEntry ? (
         <PointEntry
           onSubmit={handleSubmit}
-          onCancel={todayEntry ? () => setEditing(false) : undefined}
+          onCancel={todayEntry ? () => setEditingDate(null) : undefined}
+          editingDate={editingDate ?? undefined}
         />
       ) : (
         <Overview
           todayEntry={todayEntry}
           total={total}
           entries={entries}
-          onEdit={() => setEditing(true)}
+          onEdit={() => setEditingDate(todayEntry.date)}
+          onEditEntry={handleEditEntry}
         />
       )}
     </div>

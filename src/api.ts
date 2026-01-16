@@ -14,12 +14,12 @@ export async function fetchEntries(): Promise<EntriesResponse> {
   return response.json();
 }
 
-export async function createEntry(points: number): Promise<Entry> {
-  const date = getToday();
+export async function createEntry(points: number, date?: string): Promise<Entry> {
+  const entryDate = date ?? getToday();
   const response = await fetch("/api/entries", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ date, points }),
+    body: JSON.stringify({ date: entryDate, points }),
   });
   if (!response.ok) {
     throw new Error("Failed to create entry");

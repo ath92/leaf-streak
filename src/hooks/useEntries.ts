@@ -8,7 +8,7 @@ interface UseEntriesResult {
   todayEntry: Entry | null;
   loading: boolean;
   error: string | null;
-  submitEntry: (points: number) => Promise<void>;
+  submitEntry: (points: number, date?: string) => Promise<void>;
 }
 
 export function useEntries(): UseEntriesResult {
@@ -37,11 +37,13 @@ export function useEntries(): UseEntriesResult {
     loadEntries();
   }, [loadEntries]);
 
-  const submitEntry = useCallback(async (points: number) => {
+  const submitEntry = useCallback(async (points: number, date?: string) => {
     try {
       setError(null);
-      const entry = await createEntry(points);
-      setTodayEntry(entry);
+      const entry = await createEntry(points, date);
+      if (!date) {
+        setTodayEntry(entry);
+      }
       await loadEntries();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to submit entry");

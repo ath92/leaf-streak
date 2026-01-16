@@ -2,6 +2,7 @@ import type { Entry } from "../types";
 
 interface EntryListProps {
   entries: Entry[];
+  onEditEntry: (entry: Entry) => void;
 }
 
 function formatPoints(points: number): string {
@@ -20,7 +21,7 @@ function formatDate(dateStr: string): string {
   });
 }
 
-export function EntryList({ entries }: EntryListProps) {
+export function EntryList({ entries, onEditEntry }: EntryListProps) {
   if (entries.length === 0) {
     return <p class="no-entries">No entries yet</p>;
   }
@@ -32,7 +33,16 @@ export function EntryList({ entries }: EntryListProps) {
         {entries.map((entry) => (
           <li key={entry.id} class="entry-item">
             <span class="entry-date">{formatDate(entry.date)}</span>
-            <span class="entry-points">{formatPoints(entry.points)}</span>
+            <div class="entry-actions">
+              <span class="entry-points">{formatPoints(entry.points)}</span>
+              <button
+                class="entry-edit-button"
+                onClick={() => onEditEntry(entry)}
+                aria-label={`Edit ${formatDate(entry.date)}`}
+              >
+                Edit
+              </button>
+            </div>
           </li>
         ))}
       </ul>
