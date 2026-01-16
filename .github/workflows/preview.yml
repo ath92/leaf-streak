@@ -50,6 +50,12 @@ jobs:
           wranglerVersion: "4.59.2"
           command: deploy --env preview
 
+      - name: Extract Preview URL
+        id: preview-url
+        run: |
+          URL=$(echo "${{ steps.deploy.outputs.command-output }}" | grep -oE 'https://[^ ]+\.workers\.dev' | head -1)
+          echo "url=$URL" >> $GITHUB_OUTPUT
+
       - name: Find existing comment
         uses: peter-evans/find-comment@v3
         id: find-comment
