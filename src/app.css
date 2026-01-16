@@ -207,3 +207,82 @@ h1 {
   color: #9ca3af;
   padding: 2rem;
 }
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  h1 {
+    color: #4ade80;
+  }
+
+  .error {
+    color: #f87171;
+  }
+
+  .point-entry h2 {
+    color: #e5e7eb;
+  }
+
+  .cancel-button {
+    border-color: #6b7280;
+    color: #9ca3af;
+  }
+
+  .cancel-button:hover:not(:disabled) {
+    background: #374151;
+    border-color: #9ca3af;
+  }
+
+  .today-status {
+    background: #14532d;
+  }
+
+  .today-status h2 {
+    color: #86efac;
+  }
+
+  .today-points {
+    color: #4ade80;
+  }
+
+  .edit-button {
+    border-color: #4ade80;
+    color: #4ade80;
+  }
+
+  .edit-button:hover {
+    background: #4ade80;
+    color: #14532d;
+  }
+
+  .total-section {
+    background: #1f2937;
+  }
+
+  .total-section h3 {
+    color: #9ca3af;
+  }
+
+  .total-points {
+    color: #e5e7eb;
+  }
+
+  .entry-list h3 {
+    color: #9ca3af;
+  }
+
+  .entry-item {
+    border-bottom-color: #374151;
+  }
+
+  .entry-date {
+    color: #9ca3af;
+  }
+
+  .entry-points {
+    color: #e5e7eb;
+  }
+
+  .no-entries {
+    color: #6b7280;
+  }
+}
