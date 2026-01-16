@@ -8,8 +8,12 @@ export function Home() {
   const handleSubmit = (e: Event) => {
     e.preventDefault();
     if (streakName.trim()) {
+      // Generate a random 6-character string to prevent collisions
+      const randomSuffix = Math.random().toString(36).substring(2, 8);
+      const fullStreakId = `${streakName.trim()}_~_${randomSuffix}`;
+      
       // URL encode the streak name to be safe
-      const encodedName = encodeURIComponent(streakName.trim());
+      const encodedName = encodeURIComponent(fullStreakId);
       setLocation(`/${encodedName}`);
     }
   };

@@ -28,7 +28,17 @@ export function App({ streakId = "default" }: AppProps) {
     setEditingDate(getToday());
   };
 
-  const displayName = streakId === "default" ? "Leaf Streak" : `${streakId.charAt(0).toUpperCase() + streakId.slice(1)} Streak`;
+  const getDisplayName = (id: string) => {
+    if (id === "default") return "Leaf Streak";
+    
+    // Check if the ID ends with the delimiter and 6 alphanumeric characters
+    // and strip it for display if it does
+    const cleanId = id.replace(/_~_[a-z0-9]{6}$/, "");
+    
+    return `${cleanId.charAt(0).toUpperCase() + cleanId.slice(1)} Streak`;
+  };
+
+  const displayName = getDisplayName(streakId);
 
   if (loading) {
     return (
