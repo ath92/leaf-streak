@@ -31,7 +31,7 @@ export function EntryList({ entries, onEditEntry }: EntryListProps) {
       <h3>History</h3>
       <ul>
         {entries.map((entry) => (
-          <li key={entry.id} class="entry-item">
+          <li key={entry.date} class="entry-item">
             <span class="entry-date">{formatDate(entry.date)}</span>
             <div class="entry-actions">
               <span class="entry-points">{formatPoints(entry.points)}</span>
