@@ -30,6 +30,22 @@ h1 {
   color: #374151;
 }
 
+.date-input {
+  padding: 0.25rem 0.5rem;
+  font-size: 1.25rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #374151;
+  font-family: inherit;
+  background: white;
+  cursor: pointer;
+}
+
+.date-input:focus {
+  outline: 2px solid #22c55e;
+  border-color: transparent;
+}
+
 .point-buttons {
   display: flex;
   gap: 1rem;
@@ -242,6 +258,16 @@ h1 {
 
   .point-entry h2 {
     color: #e5e7eb;
+  }
+
+  .date-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+  }
+
+  .date-input:focus {
+    outline-color: #4ade80;
   }
 
   .cancel-button {

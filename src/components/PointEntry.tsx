@@ -42,6 +42,7 @@ export function PointEntry({
             Edit{" "}
             <input
               type="date"
+              class="date-input"
               value={editingDate}
               onChange={(e) => setEditingDate(e.currentTarget.value)}
             />
