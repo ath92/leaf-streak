@@ -6,7 +6,8 @@ import { Overview } from "./components/Overview";
 import type { Entry } from "./types";
 
 export function App() {
-  const { entries, total, todayEntry, loading, error, submitEntry } = useEntries();
+  const { entries, total, todayEntry, loading, error, submitEntry } =
+    useEntries();
   const [editingDate, setEditingDate] = useState<string | null>(null);
 
   const handleSubmit = async (points: number) => {
@@ -46,6 +47,7 @@ export function App() {
           onSubmit={handleSubmit}
           onCancel={todayEntry ? () => setEditingDate(null) : undefined}
           editingDate={editingDate ?? undefined}
+          setEditingDate={setEditingDate}
         />
       ) : (
         <Overview

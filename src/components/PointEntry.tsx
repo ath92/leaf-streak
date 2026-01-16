@@ -4,6 +4,7 @@ interface PointEntryProps {
   onSubmit: (points: number) => Promise<void>;
   onCancel?: () => void;
   editingDate?: string;
+  setEditingDate?: (date: string) => void;
 }
 
 function formatDateForDisplay(dateStr: string): string {
@@ -15,7 +16,11 @@ function formatDateForDisplay(dateStr: string): string {
   });
 }
 
-export function PointEntry({ onSubmit, onCancel, editingDate }: PointEntryProps) {
+export function PointEntry({
+  onSubmit,
+  onCancel,
+  editingDate,
+}: PointEntryProps) {
   const [submitting, setSubmitting] = useState(false);
 
   const handleClick = async (points: number) => {
@@ -29,7 +34,17 @@ export function PointEntry({ onSubmit, onCancel, editingDate }: PointEntryProps)
 
   const getHeading = () => {
     if (!onCancel) return "Log Today's Points";
-    if (editingDate) return `Edit ${formatDateForDisplay(editingDate)}`;
+    if (editingDate) {
+      if (setEditingDate) {
+        return (
+          <>
+            Edit{" "}
+            <input type="date" value={editingDate} onChange={setEditingDate} />
+          </>
+        );
+      }
+      return `Edit ${formatDateForDisplay(editingDate)}`;
+    }
     return "Change Today's Points";
   };
 
