@@ -4,10 +4,32 @@
   padding: 2rem 1.5rem;
 }
 
-h1 {
-  text-align: center;
+.app-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 2rem;
-  color: #2d5a27;
+}
+
+.app-header h1 {
+  margin-bottom: 0;
+}
+
+.switch-link {
+  position: absolute;
+  right: 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background 0.1s, color 0.1s;
+}
+
+.switch-link:hover {
+  background: #f3f4f6;
+  color: #374151;
 }
 
 .loading,
@@ -521,5 +543,14 @@ h1 {
   .start-button:hover {
     background: #4ade80;
     color: #14532d;
+  }
+
+  .switch-link {
+    color: #9ca3af;
+  }
+
+  .switch-link:hover {
+    background: #374151;
+    color: #e5e7eb;
   }
 }

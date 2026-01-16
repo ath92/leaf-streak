@@ -5,6 +5,7 @@ import { PointEntry } from "./components/PointEntry";
 import { Overview } from "./components/Overview";
 import type { Entry } from "./types";
 import { getToday } from "./api";
+import { Link } from "wouter";
 
 interface AppProps {
   streakId?: string;
@@ -62,7 +63,12 @@ export function App({ streakId = "default" }: AppProps) {
 
   return (
     <div class="container">
-      <h1>{displayName}</h1>
+      <header class="app-header">
+        <h1>{displayName}</h1>
+        <Link href="/" class="switch-link">
+          Switch
+        </Link>
+      </header>
       {showPointEntry ? (
         <PointEntry
           onSubmit={handleSubmit}
