@@ -13,11 +13,23 @@ interface UseEntriesResult {
 }
 
 function calculateStreak(entries: Entry[]): number {
+  if (entries.length === 0) return 0;
+
+  const today = getToday();
   let streak = 0;
-  for (const entry of entries) {
+
+  for (let i = 0; i < entries.length; i++) {
+    const entry = entries[i];
+
     if (entry.points === 1) {
       streak++;
+    } else if (entry.date === today && entry.id === -1) {
+      // If it's today and it's a placeholder (no entry yet), 
+      // just skip it and continue the streak from yesterday.
+      continue;
     } else {
+      // For any other case (0 points entered today, or 0 points/missing entry on previous days), 
+      // the streak breaks.
       break;
     }
   }

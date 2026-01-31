@@ -16,22 +16,6 @@
   margin-bottom: 0;
 }
 
-.switch-link {
-  position: absolute;
-  right: 0;
-  font-size: 0.875rem;
-  color: #6b7280;
-  text-decoration: none;
-  padding: 0.5rem;
-  border-radius: 6px;
-  transition: background 0.1s, color 0.1s;
-}
-
-.switch-link:hover {
-  background: #f3f4f6;
-  color: #374151;
-}
-
 .loading,
 .error {
   text-align: center;
@@ -664,15 +648,6 @@
   .start-button:hover {
     background: #4ade80;
     color: #14532d;
-  }
-
-  .switch-link {
-    color: #9ca3af;
-  }
-
-  .switch-link:hover {
-    background: #374151;
-    color: #e5e7eb;
   }
 
   /* Calendar Dark Mode */
