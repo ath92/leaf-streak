@@ -1,5 +1,5 @@
 import type { Entry } from "../types";
-import { EntryList } from "./EntryList";
+import { CalendarView } from "./CalendarView";
 
 interface OverviewProps {
   todayEntry: Entry | null;
@@ -59,7 +59,7 @@ export function Overview({
         </button>
       </div>
 
-      <EntryList entries={entries} onEditEntry={onEditEntry} />
+      <CalendarView entries={entries} onEditEntry={onEditEntry} />
     </div>
   );
 }
