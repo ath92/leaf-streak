@@ -59,7 +59,7 @@ export function App({ streakId = "default" }: AppProps) {
     );
   }
 
-  const showPointEntry = !todayEntry || editingDate !== null;
+  const showPointEntry = editingDate !== null;
 
   return (
     <div class="container">
@@ -72,7 +72,7 @@ export function App({ streakId = "default" }: AppProps) {
       {showPointEntry ? (
         <PointEntry
           onSubmit={handleSubmit}
-          onCancel={todayEntry ? () => setEditingDate(null) : undefined}
+          onCancel={() => setEditingDate(null)}
           editingDate={editingDate ?? undefined}
           setEditingDate={setEditingDate}
         />
@@ -82,7 +82,9 @@ export function App({ streakId = "default" }: AppProps) {
           total={total}
           streak={streak}
           entries={entries}
-          onEdit={() => setEditingDate(todayEntry.date)}
+          onEdit={() =>
+            setEditingDate(todayEntry ? todayEntry.date : getToday())
+          }
           onEditEntry={handleEditEntry}
           onAddEntry={handleAddEntry}
         />

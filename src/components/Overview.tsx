@@ -2,7 +2,7 @@ import type { Entry } from "../types";
 import { EntryList } from "./EntryList";
 
 interface OverviewProps {
-  todayEntry: Entry;
+  todayEntry: Entry | null;
   total: number;
   streak: number;
   entries: Entry[];
@@ -32,9 +32,11 @@ export function Overview({
     <div class="overview">
       <div class="today-status">
         <h2>Today</h2>
-        <p class="today-points">{formatPoints(todayEntry.points)}</p>
+        <p class="today-points">
+          {todayEntry ? formatPoints(todayEntry.points) : "Not set"}
+        </p>
         <button class="edit-button" onClick={onEdit}>
-          Change
+          {todayEntry ? "Change" : "Edit"}
         </button>
       </div>
 
