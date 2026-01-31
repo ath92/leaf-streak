@@ -6,7 +6,7 @@ interface CalendarViewProps {
   onEditEntry: (entry: Entry) => void;
 }
 
-const DAYS = ["S", "M", "T", "W", "T", "F", "S"];
+const DAYS = ["M", "T", "W", "T", "F", "S", "S"];
 
 export function CalendarView({ entries, onEditEntry }: CalendarViewProps) {
   const [viewDate, setViewDate] = useState(new Date());
@@ -24,7 +24,10 @@ export function CalendarView({ entries, onEditEntry }: CalendarViewProps) {
   };
 
   const getFirstDayOfMonth = (year: number, month: number) => {
-    return new Date(year, month, 1).getDay();
+    // Sunday is 0, Monday is 1, etc.
+    // We want Monday to be 0, so (day + 6) % 7
+    const day = new Date(year, month, 1).getDay();
+    return (day + 6) % 7;
   };
 
   const currentYear = viewDate.getFullYear();
@@ -50,6 +53,13 @@ export function CalendarView({ entries, onEditEntry }: CalendarViewProps) {
       return new Date(currentYear, currentMonth + 1, 1) <= today;
   }
 
+  const getLocalDateString = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   const renderDays = () => {
     const days = [];
     
@@ -59,11 +69,19 @@ export function CalendarView({ entries, onEditEntry }: CalendarViewProps) {
     }
 
     const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
+    // Reset time to confirm future check relies on date only, or keeps time?
+    // Actually simpler: check if dateStr > todayStr or similar?
+    // But "future" implies "after today". 
+    // Let's stick to comparing timestamps for "isFuture" but ensure consistency.
+    // If today is 25th. Cell 25th (00:00). 25th 00:00 <= 25th 12:00. Not future.
+    // Cell 26th (00:00). 26th 00:00 > 25th 12:00. Future.
+    // So `date > today` works fine.
+
+    const todayStr = getLocalDateString(today);
 
     for (let d = 1; d <= daysInMonth; d++) {
       const date = new Date(currentYear, currentMonth, d);
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = getLocalDateString(date);
       const entry = entriesByDate.get(dateStr);
       const isToday = dateStr === todayStr;
       
@@ -78,6 +96,7 @@ export function CalendarView({ entries, onEditEntry }: CalendarViewProps) {
       }
 
       // Check if date is in the future
+      // We use midnight of the cell date vs current time.
       const isFuture = date > today;
       if (isFuture) className += " future";
 
@@ -85,7 +104,15 @@ export function CalendarView({ entries, onEditEntry }: CalendarViewProps) {
         <button
           key={d}
           class={`${className} ${pointClass}`}
-          onClick={() => entry && !isFuture ? onEditEntry(entry) : null}
+          onClick={() => {
+            if (isFuture) return;
+            onEditEntry(entry ?? {
+              id: -1,
+              date: dateStr,
+              points: 0,
+              created_at: new Date().toISOString()
+            });
+          }}
           disabled={isFuture}
         >
           <span class="day-number">{d}</span>
