@@ -42,7 +42,7 @@ export function App() {
     );
   }
 
-  const showPointEntry = !todayEntry || editingDate !== null;
+  const showPointEntry = editingDate !== null;
 
   return (
     <div class="container">
@@ -50,7 +50,7 @@ export function App() {
       {showPointEntry ? (
         <PointEntry
           onSubmit={handleSubmit}
-          onCancel={todayEntry ? () => setEditingDate(null) : undefined}
+          onCancel={() => setEditingDate(null)}
           editingDate={editingDate ?? undefined}
           setEditingDate={setEditingDate}
         />
@@ -60,7 +60,9 @@ export function App() {
           total={total}
           streak={streak}
           entries={entries}
-          onEdit={() => setEditingDate(todayEntry.date)}
+          onEdit={() =>
+            setEditingDate(todayEntry ? todayEntry.date : getToday())
+          }
           onEditEntry={handleEditEntry}
           onAddEntry={handleAddEntry}
         />
