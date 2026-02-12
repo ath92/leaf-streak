@@ -6,6 +6,7 @@ interface UseEntriesResult {
   entries: Entry[];
   total: number;
   streak: number;
+  dayCount: number;
   todayEntry: Entry | null;
   loading: boolean;
   error: string | null;
@@ -78,6 +79,7 @@ export function useEntries(streakId: string = "default"): UseEntriesResult {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [total, setTotal] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [dayCount, setDayCount] = useState(0);
   const [todayEntry, setTodayEntry] = useState<Entry | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -91,6 +93,13 @@ export function useEntries(streakId: string = "default"): UseEntriesResult {
       setEntries(filled);
       setTotal(data.total);
       setStreak(calculateStreak(filled));
+      if (filled.length > 0) {
+        const firstDate = new Date(filled[filled.length - 1].date);
+        const today = new Date(getToday());
+        setDayCount(Math.round((today.getTime() - firstDate.getTime()) / (1000 * 60 * 60 * 24)) + 1);
+      } else {
+        setDayCount(0);
+      }
       setTodayEntry(data.todayEntry);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load entries");
@@ -121,6 +130,7 @@ export function useEntries(streakId: string = "default"): UseEntriesResult {
     entries,
     total,
     streak,
+    dayCount,
     todayEntry,
     loading,
     error,

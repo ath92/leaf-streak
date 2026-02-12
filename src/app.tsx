@@ -11,7 +11,7 @@ interface AppProps {
 }
 
 export function App({ streakId = "default" }: AppProps) {
-  const { entries, total, streak, todayEntry, loading, error, submitEntry } =
+  const { entries, total, streak, dayCount, todayEntry, loading, error, submitEntry } =
     useEntries(streakId);
   const [editingDate, setEditingDate] = useState<string | null>(null);
 
@@ -77,6 +77,7 @@ export function App({ streakId = "default" }: AppProps) {
           todayEntry={todayEntry}
           total={total}
           streak={streak}
+          dayCount={dayCount}
           entries={entries}
           onEdit={() =>
             setEditingDate(todayEntry ? todayEntry.date : getToday())
