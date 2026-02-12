@@ -5,6 +5,7 @@ interface OverviewProps {
   todayEntry: Entry | null;
   total: number;
   streak: number;
+  dayCount: number;
   entries: Entry[];
   onEdit: () => void;
   onEditEntry: (entry: Entry) => void;
@@ -23,6 +24,7 @@ export function Overview({
   todayEntry,
   total,
   streak,
+  dayCount,
   entries,
   onEdit,
   onEditEntry,
@@ -50,7 +52,7 @@ export function Overview({
 
       <div class="total-section">
         <h3>Total Points</h3>
-        <p class="total-points">{total}</p>
+        <p class="total-points">{total}<span class="day-count">/{dayCount}</span></p>
       </div>
 
       <div class="add-entry-section">
