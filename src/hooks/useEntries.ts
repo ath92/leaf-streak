@@ -93,8 +93,9 @@ export function useEntries(streakId: string = "default"): UseEntriesResult {
       setEntries(filled);
       setTotal(data.total);
       setStreak(calculateStreak(filled));
-      if (filled.length > 0) {
-        const firstDate = new Date(filled[filled.length - 1].date);
+      const firstWithPoints = [...filled].reverse().find((e) => e.points > 0);
+      if (firstWithPoints) {
+        const firstDate = new Date(firstWithPoints.date);
         const today = new Date(getToday());
         setDayCount(Math.round((today.getTime() - firstDate.getTime()) / (1000 * 60 * 60 * 24)) + 1);
       } else {
