@@ -93,6 +93,7 @@ export function CalendarView({ entries, onEditEntry }: CalendarViewProps) {
           if (entry.points >= 1) pointClass = "point-full";
           else if (entry.points >= 0.5) pointClass = "point-half";
           else if (entry.points > 0) pointClass = "point-quarter";
+          else if (entry.points === 0) pointClass = "point-zero";
       }
 
       // Check if date is in the future

@@ -513,6 +513,11 @@
   color: #854d0e;
 }
 
+.point-zero {
+  background-color: #ef4444;
+  color: white;
+}
+
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   h1 {
@@ -706,5 +711,10 @@
   .point-quarter {
     background-color: #422006;
     color: #fde047;
+  }
+
+  .point-zero {
+    background-color: #dc2626;
+    color: white;
   }
 }
